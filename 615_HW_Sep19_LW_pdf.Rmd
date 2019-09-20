@@ -25,11 +25,11 @@ Tables should include a comparison of city and highway mileage by the class of c
 
 Plot the data displaying as much of the data as you can. Put continuous variables on the axes and include a locally smoothed regression line to show the relationship with mileage.  Also make a box plot comparing city and highway MPG by class of car.  
 
----
+
 ## Tables
 - This example is flawed even though the code works.  Explain. 
 - Answer: casue the R is extremly slow with loop.
----
+
 
 ## Tables
 - Improve the code by using an *apply* functional
@@ -52,18 +52,19 @@ tb1 <- cbind(cty_mean_cls,hyw_mean_cls)
 cls <- rownames(tb1)
 rownames(tb1) <- NULL
 tb2 <- cbind(cls,tb1)
-kable(tb2,digits = 2,
+kable(tb2,digits = 2,format = "latex", booktabs=TRUE,
 col.names = c("Class", "City", "Highway"), caption = "Mean City and Highway MPG by Car Class",
 align = 'c') %>%
   kable_styling(latex_options = 'hold_position',font_size = 15.5,full_width = F,position = "center")%>%
   column_spec(1,bold = T)
 ```
 
+
+\newpage
 ## Tables
 - Improve the code by using an *aggregate* functional
 \newline
 \newline
-
 
 ```{r, echo = FALSE}
 
@@ -72,12 +73,14 @@ df1 <- mpg[,c("class","cty","hwy")]
 # df1 <- data.frame(Class=mpg$class, City=mpg$cty, Highway=mpg$hwy)
 df2 <- aggregate(df1[,2:3],by=list(df1$class),mean)
 # df2 <- aggregate(cbind(cty,hwy)~class,data = df1,mean)
-kable(df2, digits = 2,                                ## call kable to make the table
+kable(df2, digits = 2,format = "latex", booktabs=TRUE,                              ## call kable to make the table
       col.names = c("Class", "City", "Highway"), 
       caption = "Mean City and Highway MPG by Car Class" ,align = 'c') %>%
   kable_styling(latex_options = 'hold_position',font_size = 15.5,full_width = F)%>%
   column_spec(1,bold = T)
 ```
+
+
 
 ## Tables
 - Improve the code by using *dyplr*
@@ -94,15 +97,19 @@ mpg$cty <- as.double(mpg$cty)
 mpg_1 <- select(mpg,cty,hwy,class)
 
 mpg_1 %<>% group_by(class) %>% summarise(City= mean(cty),Highway=mean(hwy)) %>% arrange(class,City,Highway)
-kable(mpg_1,digits = 2,
+kable(mpg_1,digits = 2,format = "latex", booktabs=TRUE,
       col.names = c("Class", "City", "Highway"), 
       caption = "Mean City and Highway MPG by Car Class" ,align = 'c') %>%
   kable_styling(latex_options = 'hold_position',font_size = 15.5,full_width = F)%>%
   column_spec(1,bold = T)
 ```
 
+
+
 - The next table is a bit tricky. 
 
+
+\newpage
 ## Tables
 - Top 3 MPG Performing Cars: 1999, 2008
 \newline
@@ -144,9 +151,9 @@ kable(ttbl, digits = 2,booktabs=TRUE,caption = "Top 3 MPG Performing Cars: 1999,
 
 ```
 
+
 ## Plot
 - City MPG by Class of Car: 1999, 2008
-
 
 ```{r,echo=FALSE}
 ggplot(mpg) +
@@ -158,9 +165,10 @@ ggplot(mpg) +
   labs(x = "Engine Displacement",y = "City Mileage" ,title = "City MPG by Class of Car: 1999, 2008")
 ```
 
+
+
 ## Plot
 - Highway MPG by Class of Car: 1999, 2008
-
 
 ```{r,echo=FALSE}
  ggplot(mpg) +
@@ -173,6 +181,8 @@ ggplot(mpg) +
  
 ```
 
+
+\newpage
 ## Boxplots
 - City MPG by Class of Car: 1999, 2008
 
@@ -184,6 +194,8 @@ ggplot(mpg) +
  theme_minimal(base_size=16) +
   labs(x = "Car Class", y = "City Mileage", title = "City MPG by Class of Car: 1999, 2008")
 ```
+
+
 
 ## Boxplots
 - Highway MPG by Class of Car: 1999, 2008
